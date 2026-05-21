@@ -1,0 +1,53 @@
+name: pipeline-code
+on:
+    push:
+        branches: [main, develop]
+    pull_request:
+        branches: [main, develop]
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Setup node
+              uses: actions/setup-node@v6
+              with:
+                  node-version: 24
+                  cache: 'npm'
+                  cache-dependency-path: back-end/package-lock.json
+            - name: install dependencies
+              working-directory: ./backend
+              run: npm ci
+            - name: lint code
+              working-directory: ./backend
+              run: npm run lint || echo "Lint não configurado ainda"
+            - name: run test
+              working-directory: ./backend
+              run: npm run test
+            - name: security scan
+              uses: aquasecurity/trivy-action@master
+              with:
+                  image-ref: taskflow-backend:latest
+                  format: 'table'
+                  exit-code: '1'
+                  severity: 'CRITICAL,HIGH'
+    build:
+        needs: tests
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push' 
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: login to docker hub
+            - name: build and push docker image
+    
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        if: github.event_name == 'push'
+        steps:
+
+    

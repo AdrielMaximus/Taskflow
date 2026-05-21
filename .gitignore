@@ -1,3 +1,23 @@
+# Dependências
+node_modules/
 
-package.json
+# Variáveis de ambiente
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Build
+dist/
+build/
+
+# Sistema operacional
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
 

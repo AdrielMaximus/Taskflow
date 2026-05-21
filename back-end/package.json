@@ -100,15 +100,22 @@
     "utils-merge": "^1.0.1",
     "vary": "^1.1.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-promise": "^6.6.0"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/app.js",
-	  "dev": "nodemon src/app.js"
+    "dev": "nodemon src/app.js",
+    "test": "jest",
+    "lint:fix": "eslint src/**/*.js --fix",
+    "lint": "eslint src/**/*.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "commonjs"
 }
-
