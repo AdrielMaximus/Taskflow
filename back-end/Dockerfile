@@ -1,21 +1,13 @@
-FROM node:20-alpine
+FROM node:20
 
 WORKDIR /app
 
-# Copia manifestos primeiro para aproveitar cache de camadas
-COPY package.json package-lock.json ./
+COPY package*.json ./
 
-# Instala apenas dependências de produção
-ENV NODE_ENV=production
-RUN npm ci --omit=dev
+RUN npm install
 
-# Copia o resto dos arquivos
 COPY . .
-
-# Ajusta permissões e roda como usuário não-root (imagem oficial já tem 'node' user)
-RUN chown -R node:node /app
-USER node
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "dev"]
