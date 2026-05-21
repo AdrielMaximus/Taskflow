@@ -105,12 +105,16 @@
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-n": "^16.6.2",
-    "eslint-plugin-promise": "^6.6.0"
+    "eslint-plugin-promise": "^6.6.0",
+    "jest": "^30.4.2",
+    "supertest": "^7.2.2"
   },
   "scripts": {
     "start": "node src/app.js",
     "dev": "nodemon src/app.js",
     "test": "jest",
+    "test:watch": "jest --watch",
+    "test:smoke": "jest --testPathPattern=smoke",
     "lint:fix": "eslint src/**/*.js --fix",
     "lint": "eslint src/**/*.js"
   },
