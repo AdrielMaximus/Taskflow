@@ -41,7 +41,7 @@ jobs:
         run: npm run test:unit || echo "No unit tests configured"
 
       - name: Build Docker images for scanning
-        run: docker compose build
+        run: docker compose build -t taskflow-back-end .
 
       - name: Trivy Scan Backend
         uses: aquasecurity/trivy-action@v0.36.0
