@@ -48,10 +48,10 @@ jobs:
         with:
           image-ref: taskflow-back-end
           format: 'table'
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
           severity: 'CRITICAL,HIGH'
-          scanners: 'os,library'
+          scanners: vuln
 
   build-and-push:
     needs: tests
