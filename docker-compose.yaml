@@ -1,5 +1,6 @@
 services:
   taskflow-back:
+    image: taskflow-back-end
     container_name: taskflow-back
     build:
       context: ./back-end
@@ -12,6 +13,7 @@ services:
     networks:
       - taskflow-network
   taskflow-front:
+    image: taskflow-front-end
     container_name: taskflow-front
     build:
       context: ./front-end
