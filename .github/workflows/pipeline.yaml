@@ -28,7 +28,7 @@ jobs:
         working-directory: ./back-end
         run: npm run lint || echo "Lint not configured yet"
 
-      - name: Run Smoke Tests
+      - name: Run Smoke Test
         working-directory: ./back-end
         run: npm run test:smoke
 
