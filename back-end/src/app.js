@@ -10,7 +10,7 @@ app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, "tasks.json");
 
-async function readTasks() {
+async function readTasks () {
   try {
     const data = await fs.readFile(DATA_FILE, "utf8");
     return JSON.parse(data);
@@ -20,7 +20,7 @@ async function readTasks() {
   }
 }
 
-async function writeTasks(tasks) {
+async function writeTasks (tasks) {
   await fs.writeFile(DATA_FILE, JSON.stringify(tasks, null, 2), "utf8");
 }
 
@@ -56,11 +56,11 @@ app.delete("/tasks", async (req, res) => {
   }
 });
 
-app.get('/health', (req, res) => {
-  res.status(200).json({ 
-    status: 'healthy', 
-    service: 'taskflow-backend',
-    version: '1.0.0'
+app.get("/health", (req, res) => {
+  res.status(200).json({
+    status: "healthy",
+    service: "taskflow-backend",
+    version: "1.0.0"
   });
 });
 
