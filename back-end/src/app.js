@@ -2,13 +2,15 @@ const express = require("express");
 const fs = require("fs").promises;
 const path = require("path");
 const cors = require("cors");
+
 const app = express();
+
 app.use(cors());
 app.use(express.json());
 
 const DATA_FILE = path.join(__dirname, "tasks.json");
 
-async function readTasks () {
+async function readTasks() {
   try {
     const data = await fs.readFile(DATA_FILE, "utf8");
     return JSON.parse(data);
@@ -18,7 +20,7 @@ async function readTasks () {
   }
 }
 
-async function writeTasks (tasks) {
+async function writeTasks(tasks) {
   await fs.writeFile(DATA_FILE, JSON.stringify(tasks, null, 2), "utf8");
 }
 
@@ -33,8 +35,12 @@ app.get("/tasks", async (req, res) => {
 
 app.post("/tasks", async (req, res) => {
   try {
-    const tasks = Array.isArray(req.body) ? req.body : req.body.tasks || [];
+    const tasks = Array.isArray(req.body)
+      ? req.body
+      : req.body.tasks || [];
+
     await writeTasks(tasks);
+
     res.status(201).json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: "Erro ao salvar tarefas" });
@@ -50,7 +56,12 @@ app.delete("/tasks", async (req, res) => {
   }
 });
 
-const port = process.env.PORT || 3000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'healthy', 
+    service: 'taskflow-backend',
+    version: '1.0.0'
+  });
+});
 
 module.exports = app;

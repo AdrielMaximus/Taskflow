@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@types/jest": "^30.0.0",
     "accepts": "^1.3.8",
     "anymatch": "^3.1.3",
     "array-flatten": "^1.1.1",
@@ -110,11 +111,12 @@
     "supertest": "^7.2.2"
   },
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js",
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
     "test": "jest",
-    "test:watch": "jest --watch",
     "test:smoke": "jest --testPathPattern=smoke",
+    "test:integration": "jest --testPathPattern=integration",
+    "test:unit": "jest --testPathPattern=unit",
     "lint:fix": "eslint src/**/*.js --fix",
     "lint": "eslint src/**/*.js"
   },
