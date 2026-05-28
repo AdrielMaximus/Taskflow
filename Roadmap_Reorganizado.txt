@@ -1,0 +1,488 @@
+Kustomize: base + overlays + patches
+
+Argo CD
+
+Loki
+
+AlertManager
+
+IRSA (IAM Roles for Service Accounts)
+
+Trivy
+
+SOPS + age
+
+Kyverno
+
+Karpenter + Spot Instances
+
+HashiCorp Vault
+
+Service Mesh básico (Istio)
+
+DNS
+TCP/IP
+TLS/SSL
+HTTP/HTTPS internals
+Load balancing
+Ingress Controller
+Service discovery
+NAT
+CIDR/Subnetting avançado
+Network Policies no Kubernetes
+
+diferença entre Layer 4 vs Layer 7
+como o Ingress funciona
+fluxo de request no Kubernetes
+handshake TLS
+como tráfego entra no cluster
+debugging de timeout/conexão
+O que adicionar:
+NGINX Ingress Controller
+Kubernetes Network Policies
+AWS Route53
+Cert-Manager + Let’s Encrypt
+Debugging com tcpdump/curl/dig/nslookup/netstat
+
+RBAC avançado
+Pod Security Standards
+Resource quotas/limit ranges
+StatefulSets
+Persistent Volumes
+Backup/restore
+Disaster recovery
+Upgrade strategy
+Node groups
+Cluster autoscaler internals
+
+reconciliação declarativa real
+multi-env
+drift detection
+promotion strategy
+rollback GitOps
+
+secrets management
+IAM federation
+workload identity
+supply chain security
+image hardening
+runtime security
+
+OIDC profundamente
+IAM Roles for Service Accounts
+Cosign
+Falco
+CIS Benchmarks
+Security Contexts
+admission controllers
+
+OpenTelemetry
+Jaeger ou Tempo
+tracing distribuído
+
+Isso diferencia muito.
+
+systemd
+journalctl
+iostat
+vmstat
+lsof
+strace
+topologia de disco
+troubleshooting de memória
+tuning básico
+processos
+signals
+
+reusable workflows
+matrix builds
+environments approvals
+self-hosted runners
+artifact versioning
+release strategy
+blue/green
+canary deploy
+rollback automático
+
+trade-offs
+custo
+escalabilidade
+arquitetura resiliente
+Well-Architected Framework
+
+incident response
+postmortem
+RCA documentado
+caos engineering básico
+falhas simuladas
+
+
+GitOps multi-ambiente no EKS
+Deploy de uma app no EKS real com Argo CD + Kustomize, separando dev/staging/prod. Pipeline completo com GitHub Actions + OIDC (sem access keys). Este projeto sozinho fecha 3 gaps do seu CV.
+
+Pipeline DevSecOps
+Adicionar ao seu CI/CD atual: Trivy para scan de imagem, SOPS para secrets criptografados no Git, e Kyverno para policy básica de segurança no cluster.
+
+Observabilidade completa (PLG stack)
+Você já tem Prometheus + Grafana. Adiciona Loki para logs e AlertManager com regras reais. Um README bem feito mostrando os dashboards é ouro em entrevistas.
+
+
+FASE 0 — Objetivo do projeto
+Nome do projeto
+
+Production-Ready GitOps Platform on AWS EKS
+
+Objetivo
+
+Construir uma plataforma Kubernetes realista na AWS usando:
+
+EKS
+Terraform
+GitOps
+CI/CD
+observabilidade
+segurança
+autoscaling
+multi-ambiente
+
+como se fosse uma infra de produção real.
+
+FASE 1 — Fundação AWS + Terraform
+Objetivo
+
+Criar infraestrutura cloud sólida.
+
+Stack
+AWS
+Terraform
+Remote State
+VPC
+IAM
+EKS
+Você precisa implementar
+Terraform Structure
+terraform/
+ ├── environments/
+ │    ├── dev
+ │    ├── staging
+ │    └── prod
+ ├── modules/
+ │    ├── vpc
+ │    ├── eks
+ │    ├── iam
+ │    └── monitoring
+Recursos AWS
+VPC
+Public/Private Subnets
+NAT Gateway
+Internet Gateway
+Route Tables
+Security Groups
+IAM Roles
+EKS Cluster
+Managed Node Groups
+Conceitos obrigatórios
+Remote State no S3
+DynamoDB Locking
+Workspaces OU folders por env
+least privilege
+outputs
+variables
+tfvars
+Aprender profundamente
+CIDR
+subnetting
+routing
+IAM trust relationships
+EKS networking
+FASE 2 — Kubernetes Base
+Objetivo
+
+Subir cluster realmente utilizável.
+
+Instalar
+Ingress
+NGINX Ingress Controller
+Certificados
+cert-manager
+Let’s Encrypt
+DNS
+Route53
+Resultado esperado
+
+Você acessa:
+
+https://api.seudominio.com
+
+com HTTPS real.
+
+Aprender profundamente
+Ingress
+TLS handshake
+DNS
+Load Balancer
+Layer 4 vs Layer 7
+Kubernetes Services
+FASE 3 — Aplicação Real
+Objetivo
+
+Deployar app de verdade.
+
+App
+
+Pode ser:
+
+Flask
+Node.js
+Go
+
+Sugestão:
+API simples + Redis + PostgreSQL.
+
+Kubernetes
+
+Adicionar:
+
+Deployment
+Service
+ConfigMap
+Secret
+HPA
+PVC/PV
+Importante
+
+Use:
+
+requests/limits
+probes
+readiness/liveness
+Aprender profundamente
+scheduling
+resource management
+OOMKilled
+autoscaling
+storage
+FASE 4 — GitOps REAL
+Objetivo
+
+Transformar tudo em GitOps profissional.
+
+Ferramentas
+ArgoCD
+Kustomize
+Estrutura
+k8s/
+ ├── base/
+ └── overlays/
+      ├── dev
+      ├── staging
+      └── prod
+Implementar
+sync automático
+self-healing
+drift correction
+rollback
+Fluxo ideal
+Git Push
+↓
+GitHub Actions
+↓
+Build Image
+↓
+Push ECR
+↓
+Update manifest
+↓
+ArgoCD detecta mudança
+↓
+Deploy automático
+FASE 5 — CI/CD Profissional
+Objetivo
+
+Pipeline madura.
+
+GitHub Actions
+
+Adicionar:
+
+lint
+tests
+docker build
+docker scan
+push ECR
+update manifests
+Segurança
+
+Implementar:
+
+GitHub OIDC → AWS
+sem access keys
+Adicionar
+reusable workflows
+environments
+approvals
+Aprender profundamente
+federation
+OIDC
+IAM roles
+pipeline security
+FASE 6 — Observabilidade Completa
+Objetivo
+
+Criar stack de observabilidade real.
+
+Métricas
+Prometheus
+Grafana
+Logs
+Loki
+Promtail
+Alertas
+AlertManager
+Tracing (opcional depois)
+Tempo
+OU
+Jaeger
+Criar dashboards
+CPU
+Memory
+pod restarts
+request latency
+error rate
+node metrics
+Criar alertas
+high CPU
+pod crashloop
+high latency
+low memory
+FASE 7 — Segurança
+Objetivo
+
+Adicionar DevSecOps real.
+
+Ferramentas
+Scan
+Trivy
+Secrets
+SOPS + age
+Policies
+Kyverno
+Implementar
+image scanning
+encrypted secrets
+policy enforcement
+Policies úteis
+bloquear latest tag
+exigir requests/limits
+impedir privileged containers
+FASE 8 — Kubernetes Produção
+Objetivo
+
+Adicionar features avançadas.
+
+Implementar
+IRSA
+
+IAM Roles for Service Accounts
+
+Karpenter
+
+Autoscaling moderno
+
+Spot Instances
+
+redução de custo
+
+RBAC
+
+roles reais
+
+Network Policies
+
+segurança de rede
+
+FASE 9 — Documentação MONSTRA
+ESSENCIAL
+
+Isso muda seu currículo.
+
+README principal
+Deve ter:
+arquitetura
+objetivos
+stack
+diagramas
+screenshots
+fluxos
+troubleshooting
+custos
+decisões técnicas
+Criar diagramas
+
+Use:
+
+Draw.io
+Excalidraw
+Criar docs separadas
+Exemplos
+/docs
+ ├── architecture.md
+ ├── incident-response.md
+ ├── troubleshooting.md
+ ├── monitoring.md
+ ├── security.md
+ └── cost-optimization.md
+FASE 10 — Simular Produção
+MUITO IMPORTANTE
+
+Você precisa demonstrar:
+
+troubleshooting
+incident response
+Simular:
+pod crash
+node down
+alta carga
+memory leak
+deploy quebrado
+image vulnerável
+Documentar:
+RCA
+recovery
+rollback
+mitigação
+Estrutura final do GitHub
+production-ready-eks-platform/
+ ├── terraform/
+ ├── app/
+ ├── k8s/
+ ├── .github/workflows/
+ ├── docs/
+ ├── diagrams/
+ └── README.md
+Ordem IDEAL de execução
+Primeiro
+Terraform
+EKS
+app simples
+Ingress
+HTTPS
+Depois
+ArgoCD
+Kustomize
+GitHub Actions
+OIDC
+Depois
+Prometheus
+Grafana
+Loki
+AlertManager
+Depois
+Trivy
+SOPS
+Kyverno
+Por último
+IRSA
+Karpenter
+Spot
+tracing
